@@ -5,6 +5,7 @@ import 'package:polymer/polymer.dart';
 import 'speakbutton.dart';
 import 'definitionbutton.dart';
 import 'corpus.dart';
+import 'word.dart';
 
 @CustomTag('app-controller')
 class AppController extends PolymerElement {
@@ -17,6 +18,15 @@ class AppController extends PolymerElement {
   
   AppController.created() : super.created() {
     corpus = new Corpus();
+  }
+  
+  Word current_word() {
+    for (Word w in corpus.words) {
+      if (w.word == 'eggplant') {
+        return w;
+      }
+    }
+    return corpus.words[0];    
   }
   
   void speaking_started() {

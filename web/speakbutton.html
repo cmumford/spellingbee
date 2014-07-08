@@ -1,5 +1,5 @@
 <link rel="import" href="packages/polymer/polymer.html">
-<polymer-element name="speak-button" attributes="word">
+<polymer-element name="speak-button">
   <template>
     <style>
       div {
@@ -14,7 +14,6 @@
     </style>
     <div>
       <button on-click="{{speak}}"><img src="ear.png" alt="Press to speak"></button><br>
-      <span>Speaking: {{word}}</span>
     </div>
   </template>
   <script type="application/dart" src="speakbutton.dart"></script>

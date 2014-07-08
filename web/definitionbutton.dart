@@ -12,7 +12,6 @@ import 'appcontroller.dart';
 class DefinitionButton extends PolymerElement {
   @published String appId;
   @observable AppController app;
-  @published String definition = "The definition";
   
   Speaker speaker;
   
@@ -24,6 +23,8 @@ class DefinitionButton extends PolymerElement {
   }
 
   void speak() {
+    String definition = app.current_word().definition;
+    
     window.console.log("Speaking: " + definition);
     onError(event) {
       window.console.error("Error playing sound: " + definition);

@@ -12,7 +12,6 @@ import 'appcontroller.dart';
 class SpeakButton extends PolymerElement {
   @published String appId;
   @observable AppController app;
-  @published String word = "Hello";
   Speaker speaker;
     
   static const int maxSpeakPhraseLen = 100; // All Google xlate can do in a single GET
@@ -23,6 +22,7 @@ class SpeakButton extends PolymerElement {
   }
 
   void speak() {
+    String word = app.current_word().word;
     window.console.log("Speaking: " + word);
     onError(event) {
       window.console.error("Error playing sound: " + word);
