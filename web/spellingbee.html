@@ -9,6 +9,7 @@
     <script src="packages/web_components/dart_support.js"></script>
     <link rel="import" href="speakbutton.html">
     <link rel="import" href="definitionbutton.html">
+    <link rel="import" href="appcontroller.html">
     <script type="application/dart">export 'package:polymer/init.dart';</script>
     <script src="packages/browser/dart.js"></script>
     
@@ -20,12 +21,14 @@
     <p>Hello world from Dart!</p>
     
     <div id="speak_container_id">
-      <speak-button word="Eggplant"></speak-button>
+      <speak-button id="speak" appId="app" word="Eggplant"></speak-button>
     </div>
     
     <div id="definition_container_id">
-      <definition-button definition="in or at that indicated place"></definition-button>
+      <definition-button id="definition" appId="app" definition="in or at that indicated place"></definition-button>
     </div>
+
+    <app-controller id="app" speakId="speak" definitionId="definition"></app-controller>
 
   </body>
 </html>
