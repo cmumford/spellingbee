@@ -7,8 +7,8 @@
     <title>Spelling Bee</title>
     <script src="packages/web_components/platform.js"></script>
     <script src="packages/web_components/dart_support.js"></script>
-    <!-- import the speak-button -->
     <link rel="import" href="speakbutton.html">
+    <link rel="import" href="definitionbutton.html">
     <script type="application/dart">export 'package:polymer/init.dart';</script>
     <script src="packages/browser/dart.js"></script>
     
@@ -21,6 +21,10 @@
     
     <div id="speak_container_id">
       <speak-button word="Eggplant"></speak-button>
+    </div>
+    
+    <div id="definition_container_id">
+      <definition-button definition="An awesome vegetable"></definition-button>
     </div>
 
   </body>

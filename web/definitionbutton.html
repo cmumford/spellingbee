@@ -1,0 +1,22 @@
+<link rel="import" href="packages/polymer/polymer.html">
+<polymer-element name="definition-button" attributes="definition">
+  <template>
+    <style>
+      div {
+        font-size: 24pt;
+        text-align: center;
+        margin-top: 140px;
+      }
+      button {
+        font-size: 24pt;
+        margin-bottom: 20px;
+      }
+    </style>
+    <div>
+      <button on-click="{{speak}}">Definition</button><br>
+      <span>{{definition}}</span>
+    </div>
+  </template>
+  <script type="application/dart" src="definitionbutton.dart"></script>
+</polymer-element>
+
