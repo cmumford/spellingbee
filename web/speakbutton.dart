@@ -1,4 +1,4 @@
-library spellingbee.web.speakbutton;
+library spellingbee.web.speak_button;
 
 import 'package:polymer/polymer.dart';
 import 'dart:html';
@@ -14,8 +14,6 @@ class SpeakButton extends PolymerElement {
   @observable AppController app;
   Speaker speaker;
     
-  static const int maxSpeakPhraseLen = 100; // All Google xlate can do in a single GET
-
   SpeakButton.created() : super.created() {
     speaker = new Speaker();
     window.console.log("Created SpeakButton");

@@ -1,4 +1,4 @@
-library spellingbee.web.appcontroller;
+library spellingbee.web.app_controller;
 
 import 'dart:html';
 import 'package:polymer/polymer.dart';
@@ -18,6 +18,14 @@ class AppController extends PolymerElement {
   
   AppController.created() : super.created() {
     corpus = new Corpus();
+    onCorpusLoaded() {
+      window.console.log("Got corpus");
+      Element intro = document.querySelector('#intro');
+      int numWords = corpus.words.length;
+      intro.innerHtml = "Spelling bee practice of $numWords words.";
+    }
+    corpus.onLoad(onCorpusLoaded);
+    corpus.load();
   }
   
   Word current_word() {
@@ -43,6 +51,5 @@ class AppController extends PolymerElement {
 
   void definitionIdChanged() {
     definitionButton = document.querySelector('#$definitionId');
-    window.console.log(definitionButton.toString());
   }
 }

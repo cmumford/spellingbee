@@ -1,4 +1,4 @@
-library spellingbee.web.definitionbutton;
+library spellingbee.web.definition_button;
 
 import 'package:polymer/polymer.dart';
 import 'dart:html';
@@ -15,8 +15,6 @@ class DefinitionButton extends PolymerElement {
   
   Speaker speaker;
   
-  static const int maxSpeakPhraseLen = 100; // All Google xlate can do in a single GET
-
   DefinitionButton.created() : super.created() {
     speaker = new Speaker();
     window.console.log("Created DefinitionButton");
