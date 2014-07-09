@@ -1,14 +1,21 @@
 <link rel="import" href="packages/polymer/polymer.html">
-<polymer-element name="statistics-element" attributes="correct,incorrect,total,score">
+<polymer-element name="statistics-element">
   <template>
     <style>
       div {
         font-size: 24pt;
         text-align: center;
       }
-      button {
-        font-size: 24pt;
-        margin-bottom: 20px;
+      table {
+        font-size: 14pt;
+        border: 0px solid #000;
+        border-collapse: collapse;
+      }
+      td, th {
+        border: 1px solid lightgray;
+      }
+      #test_score {
+        font-weight: bold;
       }
     </style>
     <span>Statistics</span>

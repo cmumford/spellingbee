@@ -5,6 +5,7 @@ import 'package:polymer/polymer.dart';
 import 'speak_button.dart';
 import 'definition_button.dart';
 import 'answer_element.dart';
+import 'statistics_element.dart';
 import 'corpus.dart';
 import 'word.dart';
 import 'dart:math';
@@ -15,9 +16,11 @@ class AppController extends PolymerElement {
   @published String speakId;
   @published String definitionId;
   @published String answerId;
+  @published String statisticsId;
   @observable SpeakButton speakButton;
   @observable DefinitionButton definitionButton;
   @observable AnswerElement answerElement;
+  @observable StatisticsElement statisticsElement;
   Corpus corpus;
   static const int k_NumWordsInTest = 3;
   int current_word_idx;
@@ -50,6 +53,7 @@ class AppController extends PolymerElement {
       }
     }
     answerElement.reset();
+    statisticsElement.reset();
   }
   
   Word current_word() {
@@ -76,6 +80,10 @@ class AppController extends PolymerElement {
     definitionButton = document.querySelector('#$definitionId');
   }
   
+  void statisticsIdChanged() {
+    statisticsElement = document.querySelector('#$statisticsId');
+  }
+  
   void moveToNextWord() {
     current_word_idx += 1;
     if (current_word_idx >= current_words.length)
@@ -86,11 +94,13 @@ class AppController extends PolymerElement {
   
   void gotAnswerRight() {
     window.console.log("Answer is correct");
+    statisticsElement.addResult(1);
     moveToNextWord();
   }
   
   void gotAnswerWrong(String answer, String actual_answer) {
     window.console.log('Got answer wrong: "$answer" != "$actual_answer"');
+    statisticsElement.addResult(-1);
     moveToNextWord();
   }
   

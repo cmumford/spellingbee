@@ -11,17 +11,31 @@ import 'app_controller.dart';
 class StatisticsElement extends PolymerElement {
   @published String appId;
   @observable AppController app;
-  int correct = 0;
-  int incorrect = 0;
-  int total = 0;
-  double score = 0.0;
+  @published int correct = 0;
+  @published int incorrect = 0;
+  @published int total = 0;
+  @published double score = 0.0;
   
-  InputElement guess;
-    
   StatisticsElement.created() : super.created() {
   }
 
   void appIdChanged() {
     app = document.querySelector('#$appId');
+  }
+  
+  void reset() {
+    correct = 0;
+    incorrect = 0;
+    total = 0;
+    score = 0.0;
+  }
+  
+  void addResult(int result) {
+    if (result == 1)
+      correct += 1;
+    else
+      incorrect += 1;
+    total = correct + incorrect;
+    score = (1.0 * correct) / (1.0 * total);
   }
 }
