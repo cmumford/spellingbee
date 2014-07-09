@@ -1,5 +1,5 @@
 <link rel="import" href="packages/polymer/polymer.html">
-<polymer-element name="answer-element" attributes="guess">
+<polymer-element name="answer-element" attributes="answer">
   <template>
     <style>
       div {
@@ -9,15 +9,10 @@
         font-size: 24pt;
         margin-bottom: 20px;
       }
-      button {
-        font-size: 24pt;
-        margin-bottom: 20px;
-      }
     </style>
     <div>
-      <span>Type your answer here:</span>
-      <input id="{{guess}}">
-      <button on-click="{{check}}">Check answer</button><br>
+      <label for="answerInput">answer:</label>
+      <input id="answerInput" placeholder="Enter answer..." value="{{answer}}">
     </div>
   </template>
   <script type="application/dart" src="answer_element.dart"></script>

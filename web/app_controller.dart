@@ -4,17 +4,25 @@ import 'dart:html';
 import 'package:polymer/polymer.dart';
 import 'speak_button.dart';
 import 'definition_button.dart';
+import 'answer_element.dart';
 import 'corpus.dart';
 import 'word.dart';
+import 'dart:math';
 
 @CustomTag('app-controller')
 class AppController extends PolymerElement {
   
   @published String speakId;
   @published String definitionId;
+  @published String answerId;
   @observable SpeakButton speakButton;
   @observable DefinitionButton definitionButton;
+  @observable AnswerElement answerElement;
   Corpus corpus;
+  static const int k_NumWordsInTest = 3;
+  int current_word_idx;
+  List<Word> current_words = new List<Word>();
+  Random rand = new Random();
   
   AppController.created() : super.created() {
     corpus = new Corpus();
@@ -23,18 +31,29 @@ class AppController extends PolymerElement {
       Element intro = document.querySelector('#intro');
       int numWords = corpus.words.length;
       intro.innerHtml = "Spelling bee practice of $numWords words.";
+      startTest();
     }
     corpus.onLoad(onCorpusLoaded);
     corpus.load();
   }
   
-  Word current_word() {
-    for (Word w in corpus.words) {
-      if (w.word == 'eggplant') {
-        return w;
+  void startTest() {
+    window.console.log("Starting new test");
+    current_word_idx = 0;
+    List<int> used_idxs = new List<int>();
+    current_words.clear();
+    while (current_words.length < k_NumWordsInTest) {
+      int idx = rand.nextInt(corpus.words.length - 1);
+      if (!used_idxs.contains(idx)) {
+        current_words.add(corpus.words[idx]);
+        used_idxs.add(idx);
       }
     }
-    return corpus.words[0];    
+    answerElement.reset();
+  }
+  
+  Word current_word() {
+    return current_words[current_word_idx];
   }
   
   void speaking_started() {
@@ -45,11 +64,58 @@ class AppController extends PolymerElement {
     window.console.log("Stopped speaking...");
   }
   
+  void answerIdChanged() {
+    answerElement = document.querySelector('#$answerId');
+  }
+  
   void speakIdChanged() {
     speakButton = document.querySelector('#$speakId');
   }
 
   void definitionIdChanged() {
     definitionButton = document.querySelector('#$definitionId');
+  }
+  
+  void moveToNextWord() {
+    current_word_idx += 1;
+    if (current_word_idx >= current_words.length)
+      startTest();
+    else
+      answerElement.reset();
+  }
+  
+  void gotAnswerRight() {
+    window.console.log("Answer is correct");
+    moveToNextWord();
+  }
+  
+  void gotAnswerWrong(String answer, String actual_answer) {
+    window.console.log('Got answer wrong: "$answer" != "$actual_answer"');
+    moveToNextWord();
+  }
+  
+  // Does txt start with sub (case insensitive)
+  static bool startsWith(String sub, String txt) {
+    if (sub.length > txt.length)
+      return false;
+    
+    String txt_sub = txt.toLowerCase().substring(0, sub.length);
+    return txt_sub == sub.toLowerCase();
+  }
+  
+  void checkPartialAnswer(String partial_answer) {
+    Word word = current_word();
+    if (!startsWith(partial_answer, word.word))
+      gotAnswerWrong(partial_answer, word.word);
+    else
+      window.console.log("$partial_answer is the start of ${word.word}");
+  }
+  
+  void checkFullAnswer(String answer) {
+    Word word = current_word();
+    if (word.word.toLowerCase() != answer.toLowerCase())
+      gotAnswerWrong(answer, word.word);
+    else
+      gotAnswerRight();
   }
 }
