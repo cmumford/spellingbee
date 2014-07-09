@@ -5,34 +5,31 @@
       div {
         font-size: 24pt;
         text-align: center;
-        margin-top: 140px;
       }
       button {
         font-size: 24pt;
         margin-bottom: 20px;
       }
     </style>
-    <div>
-      <span>Statistics</span>
-      <table>
-        <tr>
-          <td>Correct:</td>
-          <td><span id="test_words_correct">{{correct}}</span></td>
-        </tr>
-        <tr>
-          <td>Incorrect:</td>
-          <td><span id="test_words_incorrect">{{incorrect}}</span></td>
-        </tr>
-        <tr>
-          <td>Total:</td>
-          <td><span id="test_words_total">{{total}}</span></td>
-        </tr>
-        <tr>
-          <td>Score:</td>
-          <td><span id="test_score">{{score}}</span>%</td>
-        </tr>
-      </table>
-    </div>
+    <span>Statistics</span>
+    <table>
+      <tr>
+        <td>Correct:</td>
+        <td><span id="test_words_correct">{{correct}}</span></td>
+      </tr>
+      <tr>
+        <td>Incorrect:</td>
+        <td><span id="test_words_incorrect">{{incorrect}}</span></td>
+      </tr>
+      <tr>
+        <td>Total:</td>
+        <td><span id="test_words_total">{{total}}</span></td>
+      </tr>
+      <tr>
+        <td>Score:</td>
+        <td><span id="test_score">{{score}}</span>%</td>
+      </tr>
+    </table>
   </template>
   <script type="application/dart" src="statistics_element.dart"></script>
 </polymer-element>
