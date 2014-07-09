@@ -1,12 +1,13 @@
 <link rel="import" href="packages/polymer/polymer.html">
+<link rel="import" href="packages/paper_elements/paper_icon_button.html">
 <polymer-element name="speak-button">
   <template>
     <style>
-      button {
-        margin-bottom: 20px;
-      }
     </style>
-    <button on-click="{{speak}}"><img src="ear.png" alt="Press to speak"></button><br>
+    <paper-icon-button iconSrc="ear.png"
+                       fill="true"
+                       label="Speak the word"
+                       on-click="{{speak}}"></paper-icon-button>
   </template>
   <script type="application/dart" src="speak_button.dart"></script>
 </polymer-element>

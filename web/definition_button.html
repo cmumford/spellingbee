@@ -1,4 +1,5 @@
 <link rel="import" href="packages/polymer/polymer.html">
+<link rel="import" href="packages/paper_elements/paper_icon_button.html">
 <polymer-element name="definition-button">
   <template>
     <style>
@@ -7,7 +8,12 @@
         margin-bottom: 20px;
       }
     </style>
-    <button on-click="{{speak}}">Definition</button><br>
+    
+    <paper-icon-button iconSrc="ear.png"
+                       fill="true"
+                       label="Speak the definition"
+                       on-click="{{speak}}"></paper-icon-button>
+    
   </template>
   <script type="application/dart" src="definition_button.dart"></script>
 </polymer-element>
