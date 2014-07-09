@@ -1,5 +1,5 @@
 <link rel="import" href="packages/polymer/polymer.html">
-<polymer-element name="answer-element">
+<polymer-element name="answer-element" attributes="guess">
   <template>
     <style>
       div {
@@ -13,6 +13,8 @@
       }
     </style>
     <div>
+      <span>Type your answer here:</span>
+      <input id="{{guess}}">
       <button on-click="{{check}}">Check answer</button><br>
     </div>
   </template>

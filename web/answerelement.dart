@@ -11,11 +11,18 @@ import 'appcontroller.dart';
 class AnswerElement extends PolymerElement {
   @published String appId;
   @observable AppController app;
+  InputElement guess;
     
   AnswerElement.created() : super.created() {
   }
 
   void check() {
+    if (guess != null) {
+      window.console.log("Checking: " + guess.value);
+    }
+    else {
+      window.console.error("Can't find guess");
+    }
   }
   
   void appIdChanged() {

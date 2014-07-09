@@ -10,6 +10,7 @@
     <link rel="import" href="speakbutton.html">
     <link rel="import" href="definitionbutton.html">
     <link rel="import" href="answerelement.html">
+    <link rel="import" href="statistics_element.html">
     <link rel="import" href="appcontroller.html">
     <script type="application/dart">export 'package:polymer/init.dart';</script>
     <script src="packages/browser/dart.js"></script>
@@ -31,6 +32,10 @@
 
     <div id="answer_container_id">
       <answer-element id="answer" appId="app"></answer-element>
+    </div>
+
+    <div id="statistics_container_id">
+      <statistics-element id="statistics" appId="app"></statistics-element>
     </div>
 
     <app-controller id="app" speakId="speak" definitionId="definition"></app-controller>
