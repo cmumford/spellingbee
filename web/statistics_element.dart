@@ -2,7 +2,7 @@ library spellingbee.web.statistics_element;
 
 import 'package:polymer/polymer.dart';
 import 'dart:html';
-import 'appcontroller.dart';
+import 'app_controller.dart';
 
 /**
  * UI to handle the user's answer

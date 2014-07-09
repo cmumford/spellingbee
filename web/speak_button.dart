@@ -3,7 +3,7 @@ library spellingbee.web.speak_button;
 import 'package:polymer/polymer.dart';
 import 'dart:html';
 import 'speaker.dart';
-import 'appcontroller.dart';
+import 'app_controller.dart';
 
 /**
  * A button to speak a word

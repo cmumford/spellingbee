@@ -2,8 +2,8 @@ library spellingbee.web.app_controller;
 
 import 'dart:html';
 import 'package:polymer/polymer.dart';
-import 'speakbutton.dart';
-import 'definitionbutton.dart';
+import 'speak_button.dart';
+import 'definition_button.dart';
 import 'corpus.dart';
 import 'word.dart';
 
