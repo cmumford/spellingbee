@@ -9,6 +9,8 @@ import 'statistics_element.dart';
 import 'corpus.dart';
 import 'word.dart';
 import 'dart:math';
+import 'package:paper_elements/paper_icon_button.dart';
+import 'package:core_elements/core_drawer_panel.dart';
 
 @CustomTag('app-controller')
 class AppController extends PolymerElement {
@@ -26,6 +28,7 @@ class AppController extends PolymerElement {
   int current_word_idx;
   List<Word> current_words = new List<Word>();
   Random rand = new Random();
+  CoreDrawerPanel core_drawer_panel;
   
   AppController.created() : super.created() {
     corpus = new Corpus();
@@ -38,6 +41,19 @@ class AppController extends PolymerElement {
     }
     corpus.onLoad(onCorpusLoaded);
     corpus.load();
+    
+    PaperIconButton navicon = document.querySelector('#navicon');
+    core_drawer_panel = document.querySelector('#drawerPanel');
+    onClicked(MouseEvent event) {
+      toggleDrawer();
+    }
+    navicon.addEventListener('click', onClicked);
+  }
+  
+  void toggleDrawer() {
+    // Seems to be a bug in Polymer, Polymer.dart:
+    // https://github.com/dart-lang/core-elements/issues/39
+    core_drawer_panel.jsElement.callMethod('togglePanel', []);
   }
   
   void startTest() {
@@ -127,5 +143,9 @@ class AppController extends PolymerElement {
       gotAnswerWrong(answer, word.word);
     else
       gotAnswerRight();
+  }
+  
+  void onNavigate() {
+    window.console.log("Navigate button pressed");
   }
 }
