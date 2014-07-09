@@ -25,6 +25,10 @@ packages:
     description: collection
     source: hosted
     version: "0.9.4"
+  core_elements:
+    description: core_elements
+    source: hosted
+    version: "0.0.6"
   csslib:
     description: csslib
     source: hosted
@@ -41,6 +45,10 @@ packages:
     description: observe
     source: hosted
     version: "0.10.1+2"
+  paper_elements:
+    description: paper_elements
+    source: hosted
+    version: "0.0.1"
   path:
     description: path
     source: hosted
@@ -53,6 +61,10 @@ packages:
     description: polymer_expressions
     source: hosted
     version: "0.11.2"
+  quiver:
+    description: quiver
+    source: hosted
+    version: "0.18.2"
   smoke:
     description: smoke
     source: hosted

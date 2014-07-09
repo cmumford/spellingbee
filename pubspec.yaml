@@ -4,6 +4,7 @@ author: Chris Mumford
 description: A simple spelling bee application
 homepage: https://teams.googleplex.com/#person:u=cmumford
 dependencies:
+  paper_elements: any
   polymer: '>=0.11.0 <0.12.0'
 transformers:
 - polymer:

@@ -1,18 +1,12 @@
 <link rel="import" href="packages/polymer/polymer.html">
-<polymer-element name="answer-element" attributes="answer">
+<link rel="import" href="packages/paper_elements/paper_input.html">
+<polymer-element name="answer-element">
   <template>
     <style>
-      div {
-        font-size: 24pt;
-      }
-      input {
-        font-size: 24pt;
-        margin-bottom: 20px;
-      }
     </style>
     <div>
-      <label for="answerInput">answer:</label>
-      <input id="answerInput" placeholder="Enter answer..." value="{{answer}}">
+      <paper-input id="answerInput" floatingLabel label="Enter answer..."
+                   on-input="{{gotInput}}" on-change="{{gotChange}}"></paper-input>
     </div>
   </template>
   <script type="application/dart" src="answer_element.dart"></script>

@@ -27,6 +27,7 @@ class Corpus extends Object {
       if (loadCallback != null)
         loadCallback();
     }
+    // Should I be using core-ajax?
     var request = HttpRequest.getString(url).then(onDataLoaded);
     onError(event) {
       window.console.error("Got an error loading corpus");
