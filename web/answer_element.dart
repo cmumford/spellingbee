@@ -13,7 +13,8 @@ import 'package:paper_elements/paper_input.dart';
 class AnswerElement extends PolymerElement {
   @published String appId;
   @observable AppController app;
-    
+  PaperInput answerInput;
+
   AnswerElement.created() : super.created() {
   }
 
@@ -21,26 +22,30 @@ class AnswerElement extends PolymerElement {
     app = document.querySelector('#$appId');
   }
   
-  // Reset this element back to empty
+  // Reset this input back to empty
   void reset() {
-    clearAnswer() {
-      window.console.log("Need to clear the answer");
-    }
-    // Use a timer bacause if we set the InputElement during a change event
-    // then it will be ignored.
-    Timer.run(clearAnswer);
+    window.console.log("Resetting");
+    if (answerInput == null)
+      return;
+    answerInput.value = '';
+    answerInput.inputValue = '';
+    answerInput.blur();
   }
   
   void gotInput(Event event) {
-    PaperInput input = event.target;
-    window.console.log("Got input: ${input.inputValue}");
-    app.checkPartialAnswer(input.inputValue);
+    answerInput = event.target;
+    if (answerInput.inputValue == '')
+      return;
+    window.console.log('Got input: "${answerInput.inputValue}"');
+    app.checkPartialAnswer(answerInput.inputValue);
   }
   
   // Hit the enter key
   void gotChange(Event event) {
-    PaperInput input = event.target;
-    window.console.log("Got change: ${input.inputValue}");
-    app.checkFullAnswer(input.inputValue);
+    answerInput = event.target;
+    if (answerInput.inputValue == '')
+      return;
+    window.console.log('Got change: "${answerInput.inputValue}"');
+    app.checkFullAnswer(answerInput.inputValue);
   }
 }

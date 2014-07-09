@@ -34,9 +34,6 @@ class AppController extends PolymerElement {
     corpus = new Corpus();
     onCorpusLoaded() {
       window.console.log("Got corpus");
-      Element intro = document.querySelector('#intro');
-      int numWords = corpus.words.length;
-      intro.innerHtml = "Spelling bee practice of $numWords words.";
       startTest();
     }
     corpus.onLoad(onCorpusLoaded);
@@ -48,6 +45,11 @@ class AppController extends PolymerElement {
       toggleDrawer();
     }
     navicon.addEventListener('click', onClicked);
+  }
+  
+  void setProgressText() {
+    Element intro = document.querySelector('#intro');
+    intro.innerHtml = "Word ${current_word_idx+1} of ${current_words.length} out of ${corpus.words.length} words.";
   }
   
   void toggleDrawer() {
@@ -70,6 +72,7 @@ class AppController extends PolymerElement {
     }
     answerElement.reset();
     statisticsElement.reset();
+    setProgressText();
   }
   
   Word current_word() {
@@ -102,10 +105,14 @@ class AppController extends PolymerElement {
   
   void moveToNextWord() {
     current_word_idx += 1;
-    if (current_word_idx >= current_words.length)
+    if (current_word_idx >= current_words.length) {
       startTest();
-    else
+      toggleDrawer();
+    }
+    else {
       answerElement.reset();
+      setProgressText();
+    }
   }
   
   void gotAnswerRight() {
@@ -131,18 +138,19 @@ class AppController extends PolymerElement {
   
   void checkPartialAnswer(String partial_answer) {
     Word word = current_word();
-    if (!startsWith(partial_answer, word.word))
+    if (!startsWith(partial_answer, word.word)) {
       gotAnswerWrong(partial_answer, word.word);
+    }
     else
       window.console.log("$partial_answer is the start of ${word.word}");
   }
   
   void checkFullAnswer(String answer) {
     Word word = current_word();
-    if (word.word.toLowerCase() != answer.toLowerCase())
-      gotAnswerWrong(answer, word.word);
-    else
+    if (word.word.toLowerCase() == answer.toLowerCase())
       gotAnswerRight();
+    else
+      gotAnswerWrong(answer, word.word);
   }
   
   void onNavigate() {
