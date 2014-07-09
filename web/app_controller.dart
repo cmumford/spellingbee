@@ -80,11 +80,11 @@ class AppController extends PolymerElement {
   }
   
   void speaking_started() {
-    window.console.log("Started speaking...");
+    // Might want to desensitize controls
   }
 
   void speaking_stopped() {
-    window.console.log("Stopped speaking...");
+    // Might want to sensitize controls
   }
   
   void answerIdChanged() {

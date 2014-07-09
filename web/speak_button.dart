@@ -21,14 +21,13 @@ class SpeakButton extends PolymerElement {
 
   void speak() {
     String word = app.current_word().word;
-    window.console.log("Speaking: " + word);
     onError(event) {
-      window.console.error("Error playing sound: " + word);
+      window.console.error('Error speaking "$word"');
       app.speaking_stopped();
     };
     
     onEnded(event) {
-      window.console.log("Done speaking '" + word + '"');
+      window.console.log('Done speaking "$word"');
       app.speaking_stopped();
     }
 

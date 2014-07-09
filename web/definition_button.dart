@@ -23,14 +23,13 @@ class DefinitionButton extends PolymerElement {
   void speak() {
     String definition = app.current_word().definition;
     
-    window.console.log("Speaking: " + definition);
     onError(event) {
-      window.console.error("Error playing sound: " + definition);
+      window.console.error('Error speaking "$definition"');
       app.speaking_stopped();
     };
     
     onEnded(event) {
-      window.console.log("Done speaking '" + definition + '"');
+      window.console.log('Done speaking "$definition"');
       app.speaking_stopped();
     }
 

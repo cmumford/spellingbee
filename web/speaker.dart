@@ -2,11 +2,13 @@ import 'dart:html';
 
 class Speaker {
   static const int maxSpeakPhraseLen = 100; // All Google xlate can do in a single GET
+  static const bool debug = false;
   
   // Need to run from Chrome to hear sound!
   // https://code.google.com/p/dart/issues/detail?id=9318
   void play_sound(String url, EventListener errcb, EventListener endcb) {
-    window.console.log('Playing: $url');
+    if (debug)
+      window.console.log('Playing: $url');
     AudioElement audio = new AudioElement(url);
     audio.onError.listen(errcb);
     audio.onEnded.listen(endcb);
@@ -44,7 +46,8 @@ class Speaker {
       //document.getElementById('toolong').style.display="inline";
     }
     
-    window.console.log('Speaking: "$phrase"');
+    if (debug)
+      window.console.log('Speaking: "$phrase"');
     String encoded = Uri.encodeComponent(phrase.toLowerCase());
     String url = 'http://translate.google.com/translate_tts?ie=UTF-8&q=' + encoded +
                  '&tl=en&total=1&idx=0&textlen='+encoded.length.toString()+'&prev=input';
@@ -52,7 +55,6 @@ class Speaker {
   }
   
   void speak(word, errcb, endcb) {
-    window.console.log('Speaking: "$word"');
     speak_via_translate(word, errcb, endcb);
   }
 }
