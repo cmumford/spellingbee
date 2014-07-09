@@ -7,6 +7,9 @@
     <title>Spelling Bee</title>
     <script src="packages/web_components/platform.js"></script>
     <script src="packages/web_components/dart_support.js"></script>
+    <link rel="import" href="packages/core_elements/core_toolbar.html">
+    <link rel="import" href="packages/core_elements/core_header_panel.html">
+    <link rel="import" href="packages/core_elements/core_drawer_panel.html">
     <link rel="import" href="speak_button.html">
     <link rel="import" href="definition_button.html">
     <link rel="import" href="answer_element.html">
@@ -18,27 +21,36 @@
     <link rel="stylesheet" href="spellingbee.css">
   </head>
   <body>
-    <h1>Spelling Bee</h1>
+    <core-drawer-panel id="drawerPanel">
+      <core-header-panel drawer>
+        <core-toolbar id="navheader'">
+          <span>Menu</span>
+        </core-toolbar>
+        <div id="statistics_container_id">
+          <statistics-element id="statistics" appId="app"></statistics-element>
+        </div>div>
+       </core-header-panel>
     
-    <p id="intro">Loading words...</p>
-    
-    <div id="speak_container_id">
-      <speak-button id="speak" appId="app"></speak-button>
-    </div>
-    
-    <div id="definition_container_id">
-      <definition-button id="definition" appId="app"></definition-button>
-    </div>
-
-    <div id="answer_container_id">
-      <answer-element id="answer" appId="app"></answer-element>
-    </div>
-
-    <div id="statistics_container_id">
-      <statistics-element id="statistics" appId="app"></statistics-element>
-    </div>
-
-    <app-controller id="app" speakId="speak" definitionId="definition" answerId="answer" statisticsId="statistics"></app-controller>
-
-  </body>
+      <core-header-panel main>
+        <core-toolbar id="mainheader">
+          <paper-icon-button 
+            id="navicon" icon="menu"></paper-icon-button>
+          <span flex>Spelling Bee</span>
+        </core-toolbar>
+        <div class="content">
+          <p id="intro">Loading words...</p>
+          <div id="speak_container_id">
+            <speak-button id="speak" appId="app"></speak-button>
+          </div>
+          <div id="definition_container_id">
+            <definition-button id="definition" appId="app"></definition-button>
+          </div>
+          <div id="answer_container_id">
+            <answer-element id="answer" appId="app"></answer-element>
+          </div>
+        </div>
+      </core-header-panel>
+    </core-drawer-panel>
+  <app-controller id="app" speakId="speak" definitionId="definition" answerId="answer" statisticsId="statistics"></app-controller>
+</body>
 </html>
