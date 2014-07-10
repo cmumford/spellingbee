@@ -11,6 +11,7 @@
     <link rel="import" href="packages/core_elements/core_header_panel.html">
     <link rel="import" href="packages/core_elements/core_drawer_panel.html">
     <link rel="import" href="packages/core_elements/core_icons.html">
+    <link rel="import" href="packages/paper_elements/paper_toast.html">
     <link rel="import" href="speak_button.html">
     <link rel="import" href="definition_button.html">
     <link rel="import" href="answer_element.html">
@@ -49,6 +50,8 @@
           <div id="answer_container_id">
             <answer-element id="answer" appId="app"></answer-element>
           </div>
+          <paper-toast id="correct" duration="1500" text="Right!"></paper-toast>
+          <paper-toast id="incorrect" duration="1500" text="Incorrect :-("></paper-toast>
         </div>
       </core-header-panel>
     </core-drawer-panel>

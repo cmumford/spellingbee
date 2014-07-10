@@ -11,6 +11,7 @@ import 'corpus.dart';
 import 'word.dart';
 import 'dart:math';
 import 'package:paper_elements/paper_icon_button.dart';
+import 'package:paper_elements/paper_toast.dart';
 import 'package:core_elements/core_drawer_panel.dart';
 
 @CustomTag('app-controller')
@@ -31,6 +32,8 @@ class AppController extends PolymerElement {
   Random rand = new Random();
   CoreDrawerPanel core_drawer_panel;
   Speaker speaker = new Speaker();
+  PaperToast toast_correct;
+  PaperToast toast_incorrect;
   
   AppController.created() : super.created() {
     corpus = new Corpus();
@@ -47,6 +50,8 @@ class AppController extends PolymerElement {
       toggleDrawer();
     }
     navicon.addEventListener('click', onClicked);
+    toast_correct = document.querySelector('#correct');
+    toast_incorrect = document.querySelector('#incorrect');
   }
   
   void setProgressText() {
@@ -119,6 +124,7 @@ class AppController extends PolymerElement {
   
   void gotAnswerRight() {
     window.console.log("Answer is correct");
+    toast_correct.show();
     speaker.speak_via_dictionary("right", null, null);
     statisticsElement.addResult(1);
     moveToNextWord();
@@ -126,6 +132,7 @@ class AppController extends PolymerElement {
   
   void gotAnswerWrong(String answer, String actual_answer) {
     window.console.log('Got answer wrong: "$answer" != "$actual_answer"');
+    toast_incorrect.show();
     speaker.speak_via_dictionary("incorrect", null, null);
     statisticsElement.addResult(-1);
     moveToNextWord();
