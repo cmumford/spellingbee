@@ -7,13 +7,13 @@ import 'word.dart';
 class Corpus extends Object {
   
   List<Word> words;
-  Function loadCallback;
+  Function _loadCallback;
   
   Corpus() {
   }
   
   void onLoad(Function callback) {
-    loadCallback = callback;
+    _loadCallback = callback;
   }
   
   void load() {
@@ -24,8 +24,8 @@ class Corpus extends Object {
       for (Map word_info in json_words) {
         words.add(new Word(word_info['word'], word_info['definition']));
       }
-      if (loadCallback != null)
-        loadCallback();
+      if (_loadCallback != null)
+        _loadCallback();
     }
     // Should I be using core-ajax?
     var request = HttpRequest.getString(url).then(onDataLoaded);

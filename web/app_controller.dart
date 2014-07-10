@@ -29,17 +29,17 @@ class AppController extends PolymerElement {
   @observable StatisticsElement statisticsElement;
   Corpus corpus;
   static const int k_NumWordsInTest = 4;
-  int current_word_idx;
-  List<Word> current_words = new List<Word>();
-  Random rand = new Random();
-  CoreDrawerPanel core_drawer_panel;
-  Speaker speaker = new Speaker();
-  PaperToast toast_correct;
-  PaperToast toast_incorrect;
-  PaperProgress progress;
-  Element quizDiv;
-  Element startDiv;
-  bool in_quiz = false;
+  int _current_word_idx;
+  List<Word> _current_words = new List<Word>();
+  Random _rand = new Random();
+  CoreDrawerPanel _core_drawer_panel;
+  Speaker _speaker = new Speaker();
+  PaperToast _toast_correct;
+  PaperToast _toast_incorrect;
+  PaperProgress _progress;
+  Element _div_quiz;
+  Element _div_start;
+  bool _in_quiz = false;
   
   AppController.created() : super.created() {
     corpus = new Corpus();
@@ -51,30 +51,30 @@ class AppController extends PolymerElement {
     corpus.load();
     
     PaperIconButton navicon = document.querySelector('#navicon');
-    core_drawer_panel = document.querySelector('#drawerPanel');
+    _core_drawer_panel = document.querySelector('#drawerPanel');
     onClicked(MouseEvent event) {
       toggleDrawer();
     }
     navicon.addEventListener('click', onClicked);
-    toast_correct = document.querySelector('#correct');
-    toast_incorrect = document.querySelector('#incorrect');
-    progress = document.querySelector('#progress');
-    progress.max = k_NumWordsInTest;
+    _toast_correct = document.querySelector('#correct');
+    _toast_incorrect = document.querySelector('#incorrect');
+    _progress = document.querySelector('#progress');
+    _progress.max = k_NumWordsInTest;
     
     document.querySelector('#helpButton').onClick.listen(helpClicked);
     document.querySelector('#newQuiz').onClick.listen(newQuizClicked);
     
-    quizDiv = document.querySelector("#quizDiv");
-    startDiv = document.querySelector("#startDiv");
+    _div_quiz = document.querySelector("#quizDiv");
+    _div_start = document.querySelector("#startDiv");
   }
   
   void toggleDivs() {
-    if (quizDiv.style.display == "none") {
-      quizDiv.style.display = "inherit";
-      startDiv.style.display = "none";
+    if (_div_quiz.style.display == "none") {
+      _div_quiz.style.display = "inherit";
+      _div_start.style.display = "none";
     } else {
-      quizDiv.style.display = "none";
-      startDiv.style.display = "inherit";
+      _div_quiz.style.display = "none";
+      _div_start.style.display = "inherit";
     }
   }
   
@@ -90,27 +90,27 @@ class AppController extends PolymerElement {
   
   void setProgress() {
     Element intro = document.querySelector('#intro');
-    intro.innerHtml = "Word ${current_word_idx+1} of ${current_words.length} out of ${corpus.words.length} words.";
-    if (progress != null)
-      progress.value = current_word_idx;
+    intro.innerHtml = "Word ${_current_word_idx+1} of ${_current_words.length} out of ${corpus.words.length} words.";
+    if (_progress != null)
+      _progress.value = _current_word_idx;
   }
   
   void toggleDrawer() {
     // Seems to be a bug in Polymer, Polymer.dart:
     // https://github.com/dart-lang/core-elements/issues/39
-    core_drawer_panel.jsElement.callMethod('togglePanel', []);
+    _core_drawer_panel.jsElement.callMethod('togglePanel', []);
   }
   
   void startTest() {
     window.console.log("Starting new test");
-    in_quiz = true;
-    current_word_idx = 0;
+    _in_quiz = true;
+    _current_word_idx = 0;
     List<int> used_idxs = new List<int>();
-    current_words.clear();
-    while (current_words.length < k_NumWordsInTest) {
-      int idx = rand.nextInt(corpus.words.length - 1);
+    _current_words.clear();
+    while (_current_words.length < k_NumWordsInTest) {
+      int idx = _rand.nextInt(corpus.words.length - 1);
       if (!used_idxs.contains(idx)) {
-        current_words.add(corpus.words[idx]);
+        _current_words.add(corpus.words[idx]);
         used_idxs.add(idx);
       }
     }
@@ -120,7 +120,7 @@ class AppController extends PolymerElement {
   }
   
   Word current_word() {
-    return current_words[current_word_idx];
+    return _current_words[_current_word_idx];
   }
   
   void speaking_started() {
@@ -148,9 +148,9 @@ class AppController extends PolymerElement {
   }
   
   void moveToNextWord() {
-    current_word_idx += 1;
-    if (current_word_idx >= current_words.length) {
-      in_quiz = false;
+    _current_word_idx += 1;
+    if (_current_word_idx >= _current_words.length) {
+      _in_quiz = false;
       toggleDivs();
       toggleDrawer();
     } else {
@@ -161,16 +161,16 @@ class AppController extends PolymerElement {
   
   void gotAnswerRight() {
     window.console.log("Answer is correct");
-    toast_correct.show();
-    speaker.speak_via_dictionary("right", null, null);
+    _toast_correct.show();
+    _speaker.speak_via_dictionary("right", null, null);
     statisticsElement.addResult(1);
     moveToNextWord();
   }
   
   void gotAnswerWrong(String answer, String actual_answer) {
     window.console.log('Got answer wrong: "$answer" != "$actual_answer"');
-    toast_incorrect.show();
-    speaker.speak_via_dictionary("incorrect", null, null);
+    _toast_incorrect.show();
+    _speaker.speak_via_dictionary("incorrect", null, null);
     statisticsElement.addResult(-1);
     moveToNextWord();
   }
@@ -185,7 +185,7 @@ class AppController extends PolymerElement {
   }
   
   void checkPartialAnswer(String partial_answer) {
-    if (!in_quiz)
+    if (!_in_quiz)
       return;
     Word word = current_word();
     if (!startsWith(partial_answer, word.word))
@@ -197,7 +197,7 @@ class AppController extends PolymerElement {
   void checkFullAnswer(String answer) {
     // Apparently input events get a value change when parent div is hidden
     // so looking at state variable to early exit.
-    if (!in_quiz)
+    if (!_in_quiz)
       return;
     Word word = current_word();
     if (word.word.toLowerCase() == answer.toLowerCase())

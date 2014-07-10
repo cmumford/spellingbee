@@ -12,7 +12,7 @@ import 'package:paper_elements/paper_input.dart';
 class AnswerElement extends PolymerElement {
   @published String appId;
   @observable AppController app;
-  PaperInput answerInput;
+  PaperInput _answerInput;
 
   AnswerElement.created() : super.created() {
   }
@@ -24,28 +24,28 @@ class AnswerElement extends PolymerElement {
   // Reset this input back to empty
   void reset() {
     window.console.log("Resetting");
-    if (answerInput == null)
+    if (_answerInput == null)
       return;
-    answerInput.value = '';
-    answerInput.inputValue = '';
-    answerInput.blur();
+    _answerInput.value = '';
+    _answerInput.inputValue = '';
+    _answerInput.blur();
   }
   
   void gotInput(Event event) {
-    answerInput = event.target;
-    if (answerInput.inputValue == '')
+    _answerInput = event.target;
+    if (_answerInput.inputValue == '')
       return;
-    window.console.log('Got input: "${answerInput.inputValue}"');
-    app.checkPartialAnswer(answerInput.inputValue);
+    window.console.log('Got input: "${_answerInput.inputValue}"');
+    app.checkPartialAnswer(_answerInput.inputValue);
   }
   
   // Hit the enter key
   void gotChange(Event event) {
-    answerInput = event.target;
-    if (answerInput.inputValue == '')
+    _answerInput = event.target;
+    if (_answerInput.inputValue == '')
       return;
     
-    window.console.log('Got change: "${answerInput.inputValue}"');
-    app.checkFullAnswer(answerInput.inputValue);
+    window.console.log('Got change: "${_answerInput.inputValue}"');
+    app.checkFullAnswer(_answerInput.inputValue);
   }
 }

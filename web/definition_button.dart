@@ -13,10 +13,10 @@ class DefinitionButton extends PolymerElement {
   @published String appId;
   @observable AppController app;
   
-  Speaker speaker;
+  Speaker _speaker;
   
   DefinitionButton.created() : super.created() {
-    speaker = new Speaker();
+    _speaker = new Speaker();
     window.console.log("Created DefinitionButton");
   }
 
@@ -34,7 +34,7 @@ class DefinitionButton extends PolymerElement {
     }
 
     app.speaking_started();
-    speaker.speak_via_translate(definition, onError, onEnded);
+    _speaker.speak_via_translate(definition, onError, onEnded);
   }
   
   void appIdChanged() {

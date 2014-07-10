@@ -12,10 +12,10 @@ import 'app_controller.dart';
 class SpeakButton extends PolymerElement {
   @published String appId;
   @observable AppController app;
-  Speaker speaker;
+  Speaker _speaker;
     
   SpeakButton.created() : super.created() {
-    speaker = new Speaker();
+    _speaker = new Speaker();
     window.console.log("Created SpeakButton");
   }
 
@@ -32,7 +32,7 @@ class SpeakButton extends PolymerElement {
     }
 
     app.speaking_started();
-    speaker.speak(word, onError, onEnded);
+    _speaker.speak(word, onError, onEnded);
   }
   
   void appIdChanged() {

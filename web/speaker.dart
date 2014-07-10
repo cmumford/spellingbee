@@ -2,14 +2,14 @@ import 'dart:html';
 import 'dart:web_audio';
 
 class Speaker {
-  static const int maxSpeakPhraseLen = 100; // All Google xlate can do in a single GET
-  static const bool debug = true;
-  AudioContext audioContext = new AudioContext();
+  static const int _MAX_SPEAK_PHRASE_LEN = 100; // All Google xlate can do in a single GET
+  static const bool _DEBUG = false;
+  AudioContext _audio_context = new AudioContext();
   
   void play_via_web_audio(String url, EventListener errcb, EventListener endcb) {
     
     // Not working because of cross domain checks.
-    AudioBufferSourceNode source = audioContext.createBufferSource();
+    AudioBufferSourceNode source = _audio_context.createBufferSource();
     window.console.log("Playing using web audio: $url");
     HttpRequest request = new HttpRequest();
     request.responseType = "arraybuffer";
@@ -24,7 +24,7 @@ class Speaker {
   // Need to run from Chrome to hear sound!
   // https://code.google.com/p/dart/issues/detail?id=9318
   void play_sound(String url, EventListener errcb, EventListener endcb) {
-    if (debug)
+    if (_DEBUG)
       window.console.log('Playing: $url');
     AudioElement audio = new AudioElement(url);
     if (errcb != null)
@@ -43,7 +43,7 @@ class Speaker {
   }
   
   bool is_phrase_too_long(String phrase) {
-    return phrase.length > maxSpeakPhraseLen;
+    return phrase.length > _MAX_SPEAK_PHRASE_LEN;
   }
   
   void speak_via_translate(String phrase, EventListener errcb, EventListener endcb) {
@@ -54,7 +54,7 @@ class Speaker {
       const String astr = '. TRUNCATED!';
       window.console.log('Truncating "$phrase"');
       // truncate to length allowing whatever we want to append.
-      phrase = phrase.substring(0, maxSpeakPhraseLen - astr.length);
+      phrase = phrase.substring(0, _MAX_SPEAK_PHRASE_LEN - astr.length);
       // Assume we truncated the last word so delete it.
       List<String> words = phrase.split(' ');
       words.removeLast();
@@ -64,7 +64,7 @@ class Speaker {
       //document.getElementById('toolong').style.display="inline";
     }
     
-    if (debug)
+    if (_DEBUG)
       window.console.log('Speaking: "$phrase"');
     String encoded = Uri.encodeComponent(phrase.toLowerCase());
     String url = 'http://translate.google.com/translate_tts?ie=UTF-8&q=${encoded}&tl=en&total=1&idx=0&textlen=${encoded.length}';
