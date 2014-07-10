@@ -36,6 +36,6 @@ class StatisticsElement extends PolymerElement {
     else
       incorrect += 1;
     total = correct + incorrect;
-    score = (1.0 * correct) / (1.0 * total);
+    score = (100.0 * correct / total).roundToDouble();
   }
 }
