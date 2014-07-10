@@ -6,6 +6,7 @@ import 'speak_button.dart';
 import 'definition_button.dart';
 import 'answer_element.dart';
 import 'statistics_element.dart';
+import 'speaker.dart';
 import 'corpus.dart';
 import 'word.dart';
 import 'dart:math';
@@ -29,6 +30,7 @@ class AppController extends PolymerElement {
   List<Word> current_words = new List<Word>();
   Random rand = new Random();
   CoreDrawerPanel core_drawer_panel;
+  Speaker speaker = new Speaker();
   
   AppController.created() : super.created() {
     corpus = new Corpus();
@@ -117,12 +119,14 @@ class AppController extends PolymerElement {
   
   void gotAnswerRight() {
     window.console.log("Answer is correct");
+    speaker.speak_via_dictionary("right", null, null);
     statisticsElement.addResult(1);
     moveToNextWord();
   }
   
   void gotAnswerWrong(String answer, String actual_answer) {
     window.console.log('Got answer wrong: "$answer" != "$actual_answer"');
+    speaker.speak_via_dictionary("incorrect", null, null);
     statisticsElement.addResult(-1);
     moveToNextWord();
   }

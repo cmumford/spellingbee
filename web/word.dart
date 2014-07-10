@@ -1,3 +1,5 @@
+library spellingbee.web.word;
+
 class Word {
   String word;
   String definition;

@@ -27,12 +27,14 @@ class Speaker {
     if (debug)
       window.console.log('Playing: $url');
     AudioElement audio = new AudioElement(url);
-    audio.onError.listen(errcb);
-    audio.onEnded.listen(endcb);
+    if (errcb != null)
+      audio.onError.listen(errcb);
+    if (endcb != null)
+      audio.onEnded.listen(endcb);
     audio.play();
   }
   
-  void speak_via_dictionary(word, errcb, endcb) {
+  void speak_via_dictionary(String word, EventListener errcb, EventListener endcb) {
     String lc_word = word.toLowerCase();
     String encoded_word = Uri.encodeComponent(lc_word);
     String url = 'http://ssl.gstatic.com/dictionary/static/sounds/de/0/${encoded_word}.mp3';
@@ -44,7 +46,7 @@ class Speaker {
     return phrase.length > maxSpeakPhraseLen;
   }
   
-  void speak_via_translate(String phrase, errcb, endcb) {
+  void speak_via_translate(String phrase, EventListener errcb, EventListener endcb) {
     // Google translate will only speak 100 characters at a time. we can fix
     // this if we want to spend the time. See:
     // http://www.hung-truong.com/blog/2013/04/26/hacking-googles-text-to-speech-api/
@@ -69,7 +71,7 @@ class Speaker {
     play_sound(url, errcb, endcb);
   }
   
-  void speak(word, errcb, endcb) {
+  void speak(String word, EventListener errcb, EventListener endcb) {
     speak_via_dictionary(word, errcb, endcb);
   }
 }
