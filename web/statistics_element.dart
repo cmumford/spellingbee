@@ -16,8 +16,7 @@ class StatisticsElement extends PolymerElement {
   @published int total = 0;
   @published double score = 0.0;
   
-  StatisticsElement.created() : super.created() {
-  }
+  StatisticsElement.created() : super.created();
 
   void appIdChanged() {
     app = document.querySelector('#$appId');

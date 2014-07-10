@@ -6,7 +6,7 @@ class Speaker {
   static const bool _DEBUG = false;
   AudioContext _audio_context = new AudioContext();
   
-  void play_via_web_audio(String url, EventListener errcb, EventListener endcb) {
+  void playSoundUsingWebAudio(String url, EventListener errcb, EventListener endcb) {
     
     // Not working because of cross domain checks.
     AudioBufferSourceNode source = _audio_context.createBufferSource();
@@ -23,7 +23,7 @@ class Speaker {
   
   // Need to run from Chrome to hear sound!
   // https://code.google.com/p/dart/issues/detail?id=9318
-  void play_sound(String url, EventListener errcb, EventListener endcb) {
+  void playSound(String url, EventListener errcb, EventListener endcb) {
     if (_DEBUG)
       window.console.log('Playing: $url');
     AudioElement audio = new AudioElement(url);
@@ -34,23 +34,21 @@ class Speaker {
     audio.play();
   }
   
-  void speak_via_dictionary(String word, EventListener errcb, EventListener endcb) {
+  void speakViaDictionary(String word, EventListener errcb, EventListener endcb) {
     String lc_word = word.toLowerCase();
     String encoded_word = Uri.encodeComponent(lc_word);
     String url = 'http://ssl.gstatic.com/dictionary/static/sounds/de/0/${encoded_word}.mp3';
     
-    play_sound(url, errcb, endcb);
+    playSound(url, errcb, endcb);
   }
   
-  bool is_phrase_too_long(String phrase) {
-    return phrase.length > _MAX_SPEAK_PHRASE_LEN;
-  }
+  static bool isPhraseTooLong(String phrase) => phrase.length > _MAX_SPEAK_PHRASE_LEN;
   
-  void speak_via_translate(String phrase, EventListener errcb, EventListener endcb) {
+  void speakViaTranslate(String phrase, EventListener errcb, EventListener endcb) {
     // Google translate will only speak 100 characters at a time. we can fix
     // this if we want to spend the time. See:
     // http://www.hung-truong.com/blog/2013/04/26/hacking-googles-text-to-speech-api/
-    if (is_phrase_too_long(phrase)) {
+    if (isPhraseTooLong(phrase)) {
       const String astr = '. TRUNCATED!';
       window.console.log('Truncating "$phrase"');
       // truncate to length allowing whatever we want to append.
@@ -68,10 +66,10 @@ class Speaker {
       window.console.log('Speaking: "$phrase"');
     String encoded = Uri.encodeComponent(phrase.toLowerCase());
     String url = 'http://translate.google.com/translate_tts?ie=UTF-8&q=${encoded}&tl=en&total=1&idx=0&textlen=${encoded.length}';
-    play_sound(url, errcb, endcb);
+    playSound(url, errcb, endcb);
   }
   
   void speak(String word, EventListener errcb, EventListener endcb) {
-    speak_via_dictionary(word, errcb, endcb);
+    speakViaDictionary(word, errcb, endcb);
   }
 }

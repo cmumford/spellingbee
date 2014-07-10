@@ -119,15 +119,13 @@ class AppController extends PolymerElement {
     setProgress();
   }
   
-  Word current_word() {
-    return _current_words[_current_word_idx];
-  }
+  Word currentWord() => _current_words[_current_word_idx];
   
-  void speaking_started() {
+  void speakingStarted() {
     // Might want to desensitize controls
   }
 
-  void speaking_stopped() {
+  void speakingStopped() {
     // Might want to sensitize controls
   }
   
@@ -162,7 +160,7 @@ class AppController extends PolymerElement {
   void gotAnswerRight() {
     window.console.log("Answer is correct");
     _toast_correct.show();
-    _speaker.speak_via_dictionary("right", null, null);
+    _speaker.speakViaDictionary("right", null, null);
     statisticsElement.addResult(1);
     moveToNextWord();
   }
@@ -170,7 +168,7 @@ class AppController extends PolymerElement {
   void gotAnswerWrong(String answer, String actual_answer) {
     window.console.log('Got answer wrong: "$answer" != "$actual_answer"');
     _toast_incorrect.show();
-    _speaker.speak_via_dictionary("incorrect", null, null);
+    _speaker.speakViaDictionary("incorrect", null, null);
     statisticsElement.addResult(-1);
     moveToNextWord();
   }
@@ -187,7 +185,7 @@ class AppController extends PolymerElement {
   void checkPartialAnswer(String partial_answer) {
     if (!_in_quiz)
       return;
-    Word word = current_word();
+    Word word = currentWord();
     if (!startsWith(partial_answer, word.word))
       gotAnswerWrong(partial_answer, word.word);
     else
@@ -199,7 +197,7 @@ class AppController extends PolymerElement {
     // so looking at state variable to early exit.
     if (!_in_quiz)
       return;
-    Word word = current_word();
+    Word word = currentWord();
     if (word.word.toLowerCase() == answer.toLowerCase())
       gotAnswerRight();
     else

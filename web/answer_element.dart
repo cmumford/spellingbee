@@ -14,8 +14,7 @@ class AnswerElement extends PolymerElement {
   @observable AppController app;
   PaperInput _answerInput;
 
-  AnswerElement.created() : super.created() {
-  }
+  AnswerElement.created() : super.created();
 
   void appIdChanged() {
     app = document.querySelector('#$appId');
