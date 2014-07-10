@@ -1,8 +1,25 @@
 import 'dart:html';
+import 'dart:web_audio';
 
 class Speaker {
   static const int maxSpeakPhraseLen = 100; // All Google xlate can do in a single GET
-  static const bool debug = false;
+  static const bool debug = true;
+  AudioContext audioContext = new AudioContext();
+  
+  void play_via_web_audio(String url, EventListener errcb, EventListener endcb) {
+    
+    // Not working because of cross domain checks.
+    AudioBufferSourceNode source = audioContext.createBufferSource();
+    window.console.log("Playing using web audio: $url");
+    HttpRequest request = new HttpRequest();
+    request.responseType = "arraybuffer";
+    request.onLoad.listen((event) {
+      window.console.log("Decoding audio data");
+      //audioContext.decodeAudioData(request.response);
+    });
+    request.open("GET", url, async: true);
+    request.send();
+  }
   
   // Need to run from Chrome to hear sound!
   // https://code.google.com/p/dart/issues/detail?id=9318
@@ -12,7 +29,6 @@ class Speaker {
     AudioElement audio = new AudioElement(url);
     audio.onError.listen(errcb);
     audio.onEnded.listen(endcb);
-    audio.load();
     audio.play();
   }
   
@@ -49,12 +65,11 @@ class Speaker {
     if (debug)
       window.console.log('Speaking: "$phrase"');
     String encoded = Uri.encodeComponent(phrase.toLowerCase());
-    String url = 'http://translate.google.com/translate_tts?ie=UTF-8&q=' + encoded +
-                 '&tl=en&total=1&idx=0&textlen='+encoded.length.toString()+'&prev=input';
+    String url = 'http://translate.google.com/translate_tts?ie=UTF-8&q=${encoded}&tl=en&total=1&idx=0&textlen=${encoded.length}';
     play_sound(url, errcb, endcb);
   }
   
   void speak(word, errcb, endcb) {
-    speak_via_translate(word, errcb, endcb);
+    speak_via_dictionary(word, errcb, endcb);
   }
 }

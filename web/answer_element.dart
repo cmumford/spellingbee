@@ -2,7 +2,6 @@ library spellingbee.web.answer_element;
 
 import 'package:polymer/polymer.dart';
 import 'dart:html';
-import 'dart:async';
 import 'app_controller.dart';
 import 'package:paper_elements/paper_input.dart';
 

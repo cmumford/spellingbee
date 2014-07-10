@@ -34,7 +34,7 @@ class DefinitionButton extends PolymerElement {
     }
 
     app.speaking_started();
-    speaker.speak(definition, onError, onEnded);
+    speaker.speak_via_translate(definition, onError, onEnded);
   }
   
   void appIdChanged() {
