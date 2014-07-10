@@ -49,3 +49,9 @@ core-drawer-panel:not([narrow]) #navicon {
 #startDiv {
   display: none;
 }
+
+#helpButton {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
