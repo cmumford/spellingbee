@@ -10,16 +10,16 @@ import 'app_controller.dart';
 @CustomTag('statistics-element')
 class StatisticsElement extends PolymerElement {
   @published String appId;
-  @observable AppController app;
-  @published int correct = 0;
-  @published int incorrect = 0;
-  @published int total = 0;
-  @published double score = 0.0;
+  AppController _app;
+  int correct = 0;
+  int incorrect = 0;
+  int total = 0;
+  double score = 0.0;
   
   StatisticsElement.created() : super.created();
 
   void appIdChanged() {
-    app = document.querySelector('#$appId');
+    _app = document.querySelector('#$appId');
   }
   
   void reset() {

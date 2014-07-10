@@ -23,12 +23,12 @@ class AppController extends PolymerElement {
   @published String definitionId;
   @published String answerId;
   @published String statisticsId;
-  @observable SpeakButton speakButton;
-  @observable DefinitionButton definitionButton;
-  @observable AnswerElement answerElement;
-  @observable StatisticsElement statisticsElement;
-  Corpus corpus;
-  static const int k_NumWordsInTest = 4;
+  SpeakButton _speak_button;
+  DefinitionButton _definition_button;
+  AnswerElement _answer_element;
+  StatisticsElement _statistics_element;
+  Corpus _corpus;
+  static const int _NUM_WORDS_IN_TEST = 4;
   int _current_word_idx;
   List<Word> _current_words = new List<Word>();
   Random _rand = new Random();
@@ -42,13 +42,13 @@ class AppController extends PolymerElement {
   bool _in_quiz = false;
   
   AppController.created() : super.created() {
-    corpus = new Corpus();
+    _corpus = new Corpus();
     onCorpusLoaded() {
       window.console.log("Got corpus");
       startTest();
     }
-    corpus.onLoad(onCorpusLoaded);
-    corpus.load();
+    _corpus.onLoad(onCorpusLoaded);
+    _corpus.load();
     
     PaperIconButton navicon = document.querySelector('#navicon');
     _core_drawer_panel = document.querySelector('#drawerPanel');
@@ -59,7 +59,7 @@ class AppController extends PolymerElement {
     _toast_correct = document.querySelector('#correct');
     _toast_incorrect = document.querySelector('#incorrect');
     _progress = document.querySelector('#progress');
-    _progress.max = k_NumWordsInTest;
+    _progress.max = _NUM_WORDS_IN_TEST;
     
     document.querySelector('#helpButton').onClick.listen(helpClicked);
     document.querySelector('#newQuiz').onClick.listen(newQuizClicked);
@@ -90,7 +90,7 @@ class AppController extends PolymerElement {
   
   void setProgress() {
     Element intro = document.querySelector('#intro');
-    intro.innerHtml = "Word ${_current_word_idx+1} of ${_current_words.length} out of ${corpus.words.length} words.";
+    intro.innerHtml = "Word ${_current_word_idx+1} of ${_current_words.length} out of ${_corpus.words.length} words.";
     if (_progress != null)
       _progress.value = _current_word_idx;
   }
@@ -107,15 +107,15 @@ class AppController extends PolymerElement {
     _current_word_idx = 0;
     List<int> used_idxs = new List<int>();
     _current_words.clear();
-    while (_current_words.length < k_NumWordsInTest) {
-      int idx = _rand.nextInt(corpus.words.length - 1);
+    while (_current_words.length < _NUM_WORDS_IN_TEST) {
+      int idx = _rand.nextInt(_corpus.words.length - 1);
       if (!used_idxs.contains(idx)) {
-        _current_words.add(corpus.words[idx]);
+        _current_words.add(_corpus.words[idx]);
         used_idxs.add(idx);
       }
     }
-    answerElement.reset();
-    statisticsElement.reset();
+    _answer_element.reset();
+    _statistics_element.reset();
     setProgress();
   }
   
@@ -130,19 +130,19 @@ class AppController extends PolymerElement {
   }
   
   void answerIdChanged() {
-    answerElement = document.querySelector('#$answerId');
+    _answer_element = document.querySelector('#$answerId');
   }
   
   void speakIdChanged() {
-    speakButton = document.querySelector('#$speakId');
+    _speak_button = document.querySelector('#$speakId');
   }
 
   void definitionIdChanged() {
-    definitionButton = document.querySelector('#$definitionId');
+    _definition_button = document.querySelector('#$definitionId');
   }
   
   void statisticsIdChanged() {
-    statisticsElement = document.querySelector('#$statisticsId');
+    _statistics_element = document.querySelector('#$statisticsId');
   }
   
   void moveToNextWord() {
@@ -152,7 +152,7 @@ class AppController extends PolymerElement {
       toggleDivs();
       toggleDrawer();
     } else {
-      answerElement.reset();
+      _answer_element.reset();
       setProgress();
     }
   }
@@ -161,7 +161,7 @@ class AppController extends PolymerElement {
     window.console.log("Answer is correct");
     _toast_correct.show();
     _speaker.speakViaDictionary("right", null, null);
-    statisticsElement.addResult(1);
+    _statistics_element.addResult(1);
     moveToNextWord();
   }
   
@@ -169,7 +169,7 @@ class AppController extends PolymerElement {
     window.console.log('Got answer wrong: "$answer" != "$actual_answer"');
     _toast_incorrect.show();
     _speaker.speakViaDictionary("incorrect", null, null);
-    statisticsElement.addResult(-1);
+    _statistics_element.addResult(-1);
     moveToNextWord();
   }
   

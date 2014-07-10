@@ -11,7 +11,7 @@ import 'app_controller.dart';
 @CustomTag('speak-button')
 class SpeakButton extends PolymerElement {
   @published String appId;
-  @observable AppController app;
+  AppController _app;
   Speaker _speaker;
     
   SpeakButton.created() : super.created() {
@@ -20,23 +20,23 @@ class SpeakButton extends PolymerElement {
   }
 
   void speak() {
-    String word = app.currentWord().word;
+    String word = _app.currentWord().word;
     onError(event) {
       window.console.error('Error speaking "$word"');
-      app.speakingStopped();
+      _app.speakingStopped();
     };
     
     onEnded(event) {
       window.console.log('Done speaking "$word"');
-      app.speakingStopped();
+      _app.speakingStopped();
     }
 
-    app.speakingStarted();
+    _app.speakingStarted();
     _speaker.speak(word, onError, onEnded);
   }
   
   void appIdChanged() {
-    app = document.querySelector('#$appId');
+    _app = document.querySelector('#$appId');
   }
 }
 

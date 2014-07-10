@@ -9,8 +9,7 @@ class Corpus extends Object {
   List<Word> words;
   Function _loadCallback;
   
-  Corpus() {
-  }
+  Corpus();
   
   void onLoad(Function callback) {
     _loadCallback = callback;

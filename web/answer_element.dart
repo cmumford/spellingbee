@@ -11,13 +11,13 @@ import 'package:paper_elements/paper_input.dart';
 @CustomTag('answer-element')
 class AnswerElement extends PolymerElement {
   @published String appId;
-  @observable AppController app;
+  AppController _app;
   PaperInput _answerInput;
 
   AnswerElement.created() : super.created();
 
   void appIdChanged() {
-    app = document.querySelector('#$appId');
+    _app = document.querySelector('#$appId');
   }
   
   // Reset this input back to empty
@@ -35,7 +35,7 @@ class AnswerElement extends PolymerElement {
     if (_answerInput.inputValue == '')
       return;
     window.console.log('Got input: "${_answerInput.inputValue}"');
-    app.checkPartialAnswer(_answerInput.inputValue);
+    _app.checkPartialAnswer(_answerInput.inputValue);
   }
   
   // Hit the enter key
@@ -45,6 +45,6 @@ class AnswerElement extends PolymerElement {
       return;
     
     window.console.log('Got change: "${_answerInput.inputValue}"');
-    app.checkFullAnswer(_answerInput.inputValue);
+    _app.checkFullAnswer(_answerInput.inputValue);
   }
 }

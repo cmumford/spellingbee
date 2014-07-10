@@ -11,7 +11,7 @@ import 'app_controller.dart';
 @CustomTag('definition-button')
 class DefinitionButton extends PolymerElement {
   @published String appId;
-  @observable AppController app;
+  AppController _app;
   
   Speaker _speaker;
   
@@ -21,24 +21,24 @@ class DefinitionButton extends PolymerElement {
   }
 
   void speak() {
-    String definition = app.currentWord().definition;
+    String definition = _app.currentWord().definition;
     
     onError(event) {
       window.console.error('Error speaking "$definition"');
-      app.speakingStopped();
+      _app.speakingStopped();
     };
     
     onEnded(event) {
       window.console.log('Done speaking "$definition"');
-      app.speakingStopped();
+      _app.speakingStopped();
     }
 
-    app.speakingStarted();
+    _app.speakingStarted();
     _speaker.speakViaTranslate(definition, onError, onEnded);
   }
   
   void appIdChanged() {
-    app = document.querySelector('#$appId');
+    _app = document.querySelector('#$appId');
   }
 }
 
