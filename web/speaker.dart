@@ -65,7 +65,7 @@ class Speaker {
     if (_DEBUG)
       window.console.log('Speaking: "$phrase"');
     String encoded = Uri.encodeComponent(phrase.toLowerCase());
-    String url = 'http://translate.google.com/translate_tts?ie=UTF-8&q=${encoded}&tl=en&total=1&idx=0&textlen=${encoded.length}';
+    String url = 'http://translate.google.com/translate_tts?ie=UTF-8&q=${encoded}&tl=en&total=1&idx=0&textlen=${encoded.length}&prev=input';
     playSound(url, errcb, endcb);
   }
   
