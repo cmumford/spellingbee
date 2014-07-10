@@ -12,6 +12,7 @@ import 'word.dart';
 import 'dart:math';
 import 'package:paper_elements/paper_icon_button.dart';
 import 'package:paper_elements/paper_toast.dart';
+import 'package:paper_elements/paper_progress.dart';
 import 'package:core_elements/core_drawer_panel.dart';
 
 @CustomTag('app-controller')
@@ -26,7 +27,7 @@ class AppController extends PolymerElement {
   @observable AnswerElement answerElement;
   @observable StatisticsElement statisticsElement;
   Corpus corpus;
-  static const int k_NumWordsInTest = 3;
+  static const int k_NumWordsInTest = 5;
   int current_word_idx;
   List<Word> current_words = new List<Word>();
   Random rand = new Random();
@@ -34,6 +35,7 @@ class AppController extends PolymerElement {
   Speaker speaker = new Speaker();
   PaperToast toast_correct;
   PaperToast toast_incorrect;
+  PaperProgress progress;
   
   AppController.created() : super.created() {
     corpus = new Corpus();
@@ -52,11 +54,14 @@ class AppController extends PolymerElement {
     navicon.addEventListener('click', onClicked);
     toast_correct = document.querySelector('#correct');
     toast_incorrect = document.querySelector('#incorrect');
+    progress = document.querySelector('#progress');
+    progress.max = k_NumWordsInTest;
   }
   
-  void setProgressText() {
+  void setProgress() {
     Element intro = document.querySelector('#intro');
     intro.innerHtml = "Word ${current_word_idx+1} of ${current_words.length} out of ${corpus.words.length} words.";
+    progress.value = current_word_idx;
   }
   
   void toggleDrawer() {
@@ -79,7 +84,7 @@ class AppController extends PolymerElement {
     }
     answerElement.reset();
     statisticsElement.reset();
-    setProgressText();
+    setProgress();
   }
   
   Word current_word() {
@@ -118,7 +123,7 @@ class AppController extends PolymerElement {
     }
     else {
       answerElement.reset();
-      setProgressText();
+      setProgress();
     }
   }
   
