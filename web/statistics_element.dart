@@ -11,10 +11,10 @@ import 'app_controller.dart';
 class StatisticsElement extends PolymerElement {
   @published String appId;
   AppController _app;
-  int correct = 0;
-  int incorrect = 0;
-  int total = 0;
-  double score = 0.0;
+  @observable int correct = 0;
+  @observable int incorrect = 0;
+  @observable int total = 0;
+  @observable double score = 0.0;
   
   StatisticsElement.created() : super.created();
 

@@ -22,7 +22,6 @@ class AnswerElement extends PolymerElement {
   
   // Reset this input back to empty
   void reset() {
-    window.console.log("Resetting");
     if (_answerInput == null)
       return;
     _answerInput.value = '';
