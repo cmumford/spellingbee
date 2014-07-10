@@ -28,7 +28,7 @@ class AppController extends PolymerElement {
   @observable AnswerElement answerElement;
   @observable StatisticsElement statisticsElement;
   Corpus corpus;
-  static const int k_NumWordsInTest = 5;
+  static const int k_NumWordsInTest = 4;
   int current_word_idx;
   List<Word> current_words = new List<Word>();
   Random rand = new Random();
@@ -37,6 +37,9 @@ class AppController extends PolymerElement {
   PaperToast toast_correct;
   PaperToast toast_incorrect;
   PaperProgress progress;
+  Element quizDiv;
+  Element startDiv;
+  bool in_quiz = false;
   
   AppController.created() : super.created() {
     corpus = new Corpus();
@@ -58,13 +61,31 @@ class AppController extends PolymerElement {
     progress = document.querySelector('#progress');
     progress.max = k_NumWordsInTest;
     
-    PaperIconButton help = document.querySelector('#helpButton');
-    help.onClick.listen(helpClicked);
+    document.querySelector('#helpButton').onClick.listen(helpClicked);
+    document.querySelector('#newQuiz').onClick.listen(newQuizClicked);
+    
+    quizDiv = document.querySelector("#quizDiv");
+    startDiv = document.querySelector("#startDiv");
+  }
+  
+  void toggleDivs() {
+    if (quizDiv.style.display == "none") {
+      quizDiv.style.display = "inherit";
+      startDiv.style.display = "none";
+    } else {
+      quizDiv.style.display = "none";
+      startDiv.style.display = "inherit";
+    }
   }
   
   void helpClicked(_) {
     PaperDialog dialog = document.querySelector('#helpDialog');
     dialog.toggle();
+  }
+  
+  void newQuizClicked(_) {
+    startTest();
+    toggleDivs();
   }
   
   void setProgress() {
@@ -82,6 +103,7 @@ class AppController extends PolymerElement {
   
   void startTest() {
     window.console.log("Starting new test");
+    in_quiz = true;
     current_word_idx = 0;
     List<int> used_idxs = new List<int>();
     current_words.clear();
@@ -128,10 +150,10 @@ class AppController extends PolymerElement {
   void moveToNextWord() {
     current_word_idx += 1;
     if (current_word_idx >= current_words.length) {
-      startTest();
+      in_quiz = false;
+      toggleDivs();
       toggleDrawer();
-    }
-    else {
+    } else {
       answerElement.reset();
       setProgress();
     }
@@ -163,23 +185,24 @@ class AppController extends PolymerElement {
   }
   
   void checkPartialAnswer(String partial_answer) {
+    if (!in_quiz)
+      return;
     Word word = current_word();
-    if (!startsWith(partial_answer, word.word)) {
+    if (!startsWith(partial_answer, word.word))
       gotAnswerWrong(partial_answer, word.word);
-    }
     else
       window.console.log("$partial_answer is the start of ${word.word}");
   }
   
   void checkFullAnswer(String answer) {
+    // Apparently input events get a value change when parent div is hidden
+    // so looking at state variable to early exit.
+    if (!in_quiz)
+      return;
     Word word = current_word();
     if (word.word.toLowerCase() == answer.toLowerCase())
       gotAnswerRight();
     else
       gotAnswerWrong(answer, word.word);
-  }
-  
-  void onNavigate() {
-    window.console.log("Navigate button pressed");
   }
 }

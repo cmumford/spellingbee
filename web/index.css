@@ -46,3 +46,6 @@ core-toolbar {
 core-drawer-panel:not([narrow]) #navicon {
   display: none;
 }
+#startDiv {
+  display: none;
+}

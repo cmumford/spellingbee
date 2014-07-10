@@ -44,6 +44,7 @@ class AnswerElement extends PolymerElement {
     answerInput = event.target;
     if (answerInput.inputValue == '')
       return;
+    
     window.console.log('Got change: "${answerInput.inputValue}"');
     app.checkFullAnswer(answerInput.inputValue);
   }

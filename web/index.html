@@ -43,16 +43,21 @@
           <span flex>Spelling Bee</span>
         </core-toolbar>
         <div class="content">
-          <p id="intro">Loading words...</p>
-          <paper-progress id="progress"></paper-progress>
-          <div id="speak_container_id">
-            <speak-button id="speak" appId="app"></speak-button>
+          <div id="quizDiv">
+            <p id="intro">Loading words...</p>
+            <paper-progress id="progress"></paper-progress>
+            <div id="speak_container_id">
+              <speak-button id="speak" appId="app"></speak-button>
+            </div>
+            <div id="definition_container_id">
+              <definition-button id="definition" appId="app"></definition-button>
+            </div>
+            <div id="answer_container_id">
+              <answer-element id="answer" appId="app"></answer-element>
+            </div>
           </div>
-          <div id="definition_container_id">
-            <definition-button id="definition" appId="app"></definition-button>
-          </div>
-          <div id="answer_container_id">
-            <answer-element id="answer" appId="app"></answer-element>
+          <div id="startDiv">
+            <paper-button id="newQuiz" label="Start New Quiz" raisedButton></paper-button>
           </div>
           <paper-icon-button id="helpButton" icon="help"></paper-icon-button>
           <paper-toast id="correct" duration="1500" text="Right!"></paper-toast>
