@@ -12,7 +12,9 @@
     <link rel="import" href="packages/core_elements/core_drawer_panel.html">
     <link rel="import" href="packages/core_elements/core_icons.html">
     <link rel="import" href="packages/paper_elements/paper_toast.html">
+    <link rel="import" href="packages/paper_elements/paper_dialog.html">
     <link rel="import" href="packages/paper_elements/paper_progress.html">
+    <link rel="import" href="packages/paper_elements/paper_icon_button.html">
     <link rel="import" href="speak_button.html">
     <link rel="import" href="definition_button.html">
     <link rel="import" href="answer_element.html">
@@ -31,7 +33,7 @@
         </core-toolbar>
         <div id="statistics_container_id">
           <statistics-element id="statistics" appId="app"></statistics-element>
-        </div>div>
+        </div>
        </core-header-panel>
     
       <core-header-panel main>
@@ -52,8 +54,16 @@
           <div id="answer_container_id">
             <answer-element id="answer" appId="app"></answer-element>
           </div>
+          <paper-icon-button id="helpButton" icon="help"></paper-icon-button>
           <paper-toast id="correct" duration="1500" text="Right!"></paper-toast>
           <paper-toast id="incorrect" duration="1500" text="Incorrect :-("></paper-toast>
+          <paper-dialog id="helpDialog" heading="Help" transition="paper-dialog-transition-center">
+            <p>Welcome to Spelling Bee.</p>
+            <p>This application will speak the word (or definition) to you. Your job is to
+            type the correct spelling in the answer field. Your answer is checked for each 
+            letter you type - just like a real spelling Bee. When you think you have the correct
+            answer just tap the Enter key on the keyboard to submit and see if you are right.</p>
+          </paper-dialog>
         </div>
       </core-header-panel>
     </core-drawer-panel>

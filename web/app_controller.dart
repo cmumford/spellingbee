@@ -13,6 +13,7 @@ import 'dart:math';
 import 'package:paper_elements/paper_icon_button.dart';
 import 'package:paper_elements/paper_toast.dart';
 import 'package:paper_elements/paper_progress.dart';
+import 'package:paper_elements/paper_dialog.dart';
 import 'package:core_elements/core_drawer_panel.dart';
 
 @CustomTag('app-controller')
@@ -56,12 +57,21 @@ class AppController extends PolymerElement {
     toast_incorrect = document.querySelector('#incorrect');
     progress = document.querySelector('#progress');
     progress.max = k_NumWordsInTest;
+    
+    PaperIconButton help = document.querySelector('#helpButton');
+    help.onClick.listen(helpClicked);
+  }
+  
+  void helpClicked(_) {
+    PaperDialog dialog = document.querySelector('#helpDialog');
+    dialog.toggle();
   }
   
   void setProgress() {
     Element intro = document.querySelector('#intro');
     intro.innerHtml = "Word ${current_word_idx+1} of ${current_words.length} out of ${corpus.words.length} words.";
-    progress.value = current_word_idx;
+    if (progress != null)
+      progress.value = current_word_idx;
   }
   
   void toggleDrawer() {
