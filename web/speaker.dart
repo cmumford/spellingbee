@@ -70,6 +70,11 @@ class Speaker {
   }
   
   void speak(String word, EventListener errcb, EventListener endcb) {
-    speakViaDictionary(word, errcb, endcb);
+    dictErr(_) {
+      if (_DEBUG)
+        window.console.log("Falling back to translate");
+      speakViaTranslate(word, errcb, endcb);
+    }
+    speakViaDictionary(word, dictErr, endcb);
   }
 }
