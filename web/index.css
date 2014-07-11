@@ -56,6 +56,10 @@ core-drawer-panel:not([narrow]) #navicon {
   right: 10px;
 }
 
+#helpDialog {
+  font-size: 14pt;
+}
+
 #progress {
   width: 80%;
 }
