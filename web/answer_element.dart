@@ -40,10 +40,12 @@ class AnswerElement extends PolymerElement {
   // Hit the enter key
   void gotChange(Event event) {
     _answerInput = event.target;
-    if (_answerInput.inputValue == '')
+    String answer = _answerInput.inputValue;
+    if (answer == '')
       return;
     
-    window.console.log('Got change: "${_answerInput.inputValue}"');
-    _app.checkFullAnswer(_answerInput.inputValue);
+    reset();
+    window.console.log('Got change: "${answer}"');
+    _app.checkFullAnswer(answer);
   }
 }
